@@ -6,129 +6,354 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0b0b14">
   <title>KYZO — Play. Earn. Claim.</title>
+
   <style>
     * { box-sizing: border-box; }
+
     body {
-      margin: 0; background: #0b0b14; color: #f7f7ff;
+      margin: 0;
+      background: #0b0b14;
+      color: #f7f7ff;
       font-family: Arial, sans-serif;
     }
+
     header {
-      display: flex; justify-content: space-between;
-      align-items: center; padding: 20px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 20px 6%;
       border-bottom: 1px solid #242438;
     }
-    .logo { font-size: 27px; font-weight: 900; color: #a78bfa; }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 900;
+      color: #a78bfa;
+    }
+
     nav a {
-      color: #ddd6fe; text-decoration: none;
-      margin-left: 16px; font-size: 14px;
+      color: #ddd6fe;
+      text-decoration: none;
+      margin-left: 12px;
+      font-size: 14px;
     }
+
     .hero {
-      text-align: center; padding: 75px 20px 55px;
-      background: radial-gradient(ellipse at top, #30205c, #0b0b14 70%);
+      text-align: center;
+      padding: 75px 20px 55px;
+      background: radial-gradient(
+        ellipse at top, #30205c, #0b0b14 70%
+      );
     }
+
     .tag {
-      color: #c4b5fd; border: 1px solid #59418a;
-      border-radius: 30px; padding: 8px 13px;
+      color: #c4b5fd;
+      border: 1px solid #59418a;
+      border-radius: 30px;
+      padding: 8px 13px;
       font-size: 12px;
     }
-    h1 { font-size: clamp(42px, 9vw, 70px); margin: 28px 0 14px; }
+
+    h1 {
+      font-size: clamp(42px, 9vw, 70px);
+      margin: 28px 0 14px;
+    }
+
     h1 span { color: #a78bfa; }
-    .hero p { color: #b8b8ca; line-height: 1.7; }
-    .btn {
-      display: inline-block; background: #8b5cf6;
-      color: white; padding: 14px 22px; border-radius: 10px;
-      text-decoration: none; font-weight: bold; margin-top: 18px;
-    }
-    main { max-width: 1000px; margin: auto; padding: 35px 20px; }
-    h2 { text-align: center; margin-bottom: 25px; }
-    .grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .card {
-      background: #141421; border: 1px solid #292940;
-      padding: 23px; border-radius: 16px;
-    }
-    .emoji { font-size: 30px; }
-    .card p { color: #aaaabd; font-size: 14px; line-height: 1.6; }
-    .notice {
-      margin-top: 30px; padding: 18px; border-radius: 12px;
-      background: #171526; color: #b8b8ca; font-size: 13px;
+
+    .hero p {
+      color: #b8b8ca;
       line-height: 1.7;
     }
-    footer { text-align: center; color: #88889c; padding: 30px 15px; }
+
+    .btn {
+      display: inline-block;
+      background: #8b5cf6;
+      color: white;
+      padding: 13px 20px;
+      border: 0;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 14px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .secondary {
+      background: #25233b;
+      border: 1px solid #514778;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 35px 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit, minmax(220px, 1fr)
+      );
+      gap: 16px;
+    }
+
+    .card {
+      background: #141421;
+      border: 1px solid #292940;
+      padding: 23px;
+      border-radius: 16px;
+    }
+
+    .emoji { font-size: 30px; }
+
+    .card p {
+      color: #aaaabd;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .notice {
+      margin-top: 30px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #171526;
+      color: #b8b8ca;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    #account {
+      text-align: center;
+      margin-top: 18px;
+      overflow-wrap: anywhere;
+    }
+
+    #status {
+      color: #c4b5fd;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      color: #88889c;
+      padding: 30px 15px;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <div class="logo">KYZO<span>.</span></div>
+
     <nav>
       <a href="#features">Features</a>
       <a href="#rewards">Rewards</a>
+      <button id="loginBtn" class="btn">Login with Google</button>
+      <button id="logoutBtn" class="btn secondary" hidden>
+        Logout
+      </button>
     </nav>
   </header>
 
   <section class="hero">
     <span class="tag">YOUR GAMING REWARDS HUB</span>
     <h1>Play. <span>Earn.</span><br>Claim.</h1>
-    <p>Complete activities, collect points, and explore<br>
-       exciting gaming rewards with KYZO.</p>
+    <p>
+      Complete activities, collect points, and explore<br>
+      exciting gaming rewards with KYZO.
+    </p>
     <a class="btn" href="#features">Explore KYZO ↓</a>
+
+    <div id="account">
+      <p id="status" role="status" aria-live="polite">
+        Checking login status...
+      </p>
+    </div>
   </section>
 
   <main>
     <h2 id="features">Your Rewards Journey</h2>
+
     <div class="grid">
       <div class="card">
         <div class="emoji">🎯</div>
         <h3>Earn Points</h3>
         <p>Discover activities and earn points when eligible tasks are verified.</p>
       </div>
+
       <div class="card">
         <div class="emoji">🎁</div>
         <h3>Daily Rewards</h3>
-        <p>Build a daily habit and explore available bonus opportunities.</p>
+        <p>Explore daily bonus opportunities as they become available.</p>
       </div>
+
       <div class="card">
         <div class="emoji">🎮</div>
         <h3>Gaming Rewards</h3>
-        <p>Explore a planned rewards catalogue for supported games.</p>
+        <p>Explore planned rewards for supported games.</p>
       </div>
+
       <div class="card">
         <div class="emoji">👥</div>
         <h3>Refer Friends</h3>
-        <p>Invite friends and earn referral points when eligible conditions are met.</p>
+        <p>Referral rewards may be introduced in a future update.</p>
       </div>
     </div>
 
-    <h2 id="rewards" style="margin-top:45px">Rewards to Explore</h2>
+    <h2 id="rewards" style="margin-top:45px">
+      Rewards to Explore
+    </h2>
+
     <div class="grid">
       <div class="card">
         <div class="emoji">🪙</div>
         <h3>Robux Rewards</h3>
         <p>Planned redemption options, subject to availability and verification.</p>
       </div>
+
       <div class="card">
         <div class="emoji">🍎</div>
         <h3>Blox Fruits</h3>
-        <p>Explore potential in-game reward options when available.</p>
+        <p>Potential in-game rewards may be explored in future updates.</p>
       </div>
+
       <div class="card">
         <div class="emoji">💵</div>
         <h3>Cash Rewards</h3>
-        <p>Cash redemption may be offered only when eligible and properly funded.</p>
+        <p>Cash rewards are not active and are not guaranteed.</p>
       </div>
     </div>
 
     <div class="notice">
       <strong>Welcome to KYZO!</strong><br>
-      This is the first version of our website. Accounts, points,
-      tasks and redemptions are not active yet. No rewards or payouts
-      are guaranteed. Never share your Roblox password.
+      Google login is being connected. Points, tasks and
+      redemptions are not active yet. No payouts are guaranteed.
+      Never share your Roblox password or account cookies.
     </div>
   </main>
 
   <footer>© 2026 KYZO · Play. Earn. Claim.</footer>
+
+  <!-- Supabase JavaScript library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL =
+      "https://xhpzfidbzhmjrdajeivq.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_eS0sGR1UYT3qWV_77NXO_g_7ygYrPjj";
+
+    const statusEl = document.getElementById("status");
+    const loginBtn = document.getElementById("loginBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    let supabaseClient;
+
+    function showSignedOut() {
+      statusEl.textContent = "You're not logged in.";
+      loginBtn.hidden = false;
+      logoutBtn.hidden = true;
+    }
+
+    function showSignedIn(user) {
+      statusEl.textContent =
+        "Logged in as " + (user.email || "Google user");
+      loginBtn.hidden = true;
+      logoutBtn.hidden = false;
+    }
+
+    async function startKYZO() {
+      if (!window.supabase) {
+        statusEl.textContent =
+          "Login library failed to load. Refresh and try again.";
+        return;
+      }
+
+      supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+      const { data, error } =
+        await supabaseClient.auth.getSession();
+
+      if (error) {
+        statusEl.textContent = "Unable to check login status.";
+      } else if (data.session) {
+        showSignedIn(data.session.user);
+      } else {
+        showSignedOut();
+      }
+
+      supabaseClient.auth.onAuthStateChange(
+        (_event, session) => {
+          if (session) {
+            showSignedIn(session.user);
+          } else {
+            showSignedOut();
+          }
+        }
+      );
+    }
+
+    loginBtn.addEventListener("click", async () => {
+      if (!supabaseClient) {
+        statusEl.textContent =
+          "Login is not ready. Refresh the page and try again.";
+        return;
+      }
+
+      loginBtn.disabled = true;
+      statusEl.textContent = "Opening Google sign-in...";
+
+      const { error } =
+        await supabaseClient.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: window.location.origin
+          }
+        });
+
+      if (error) {
+        statusEl.textContent =
+          "Login error: " + error.message;
+        loginBtn.disabled = false;
+      }
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      logoutBtn.disabled = true;
+
+      const { error } = await supabaseClient.auth.signOut();
+
+      if (error) {
+        statusEl.textContent =
+          "Logout failed. Please try again.";
+      }
+
+      logoutBtn.disabled = false;
+    });
+
+    startKYZO().catch(() => {
+      statusEl.textContent =
+        "Unable to initialize login. Refresh and try again.";
+    });
+  </script>
 </body>
-    </html>
-    
+</html>
